@@ -3,4 +3,5 @@ Membuat Bookshelf API
 
 Paket yang diperlukan :
 @Hapi/Hapi,
-nanoid
+nanoid, 
+nodemon (dev dependencies)
