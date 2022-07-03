@@ -58,15 +58,52 @@ const addBookHandler = (request, h) => {
 }
 
 const viewBookHandler = (request, h) => {
+    const { name, reading, finished } = request.query;
     const filtered = []
+
+    //cara ini tidak bisa multiquery
     for (let i = 0; i<books.length; i++) {
-        const id = books[i].id;
-        const name = books[i].name;
-        const publisher = books[i].publisher;
-
-        const tempBook = { id, name, publisher };
-
-        filtered.push(tempBook);
+        if ( name != null ) {
+            if ( books[i].name.toUpperCase() == name.toUpperCase() ) {
+                const id = books[i].id;
+                const name = books[i].name;
+                const publisher = books[i].publisher;
+        
+                const tempBook = { id, name, publisher };
+        
+                filtered.push(tempBook);
+            }
+        }
+        if ( reading != null ) {
+            if ( books[i].reading == reading ) {
+                const id = books[i].id;
+                const name = books[i].name;
+                const publisher = books[i].publisher;
+        
+                const tempBook = { id, name, publisher };
+        
+                filtered.push(tempBook);
+            }
+        }
+        if ( finished != null ) {
+            if ( books[i].finished == finished ) {
+                const id = books[i].id;
+                const name = books[i].name;
+                const publisher = books[i].publisher;
+        
+                const tempBook = { id, name, publisher };
+        
+                filtered.push(tempBook);
+            }
+        } else {
+            const id = books[i].id;
+            const name = books[i].name;
+            const publisher = books[i].publisher;
+    
+            const tempBook = { id, name, publisher };
+    
+            filtered.push(tempBook);
+        }
     }
 
     const response = h.response({
@@ -77,7 +114,7 @@ const viewBookHandler = (request, h) => {
     });
     response.code(200);
     return response;
-}
+};
 
 const viewBookDetails = (request, h) => {
     const { bookId } = request.params;
