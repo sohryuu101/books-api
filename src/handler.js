@@ -141,10 +141,9 @@ const viewBookDetails = (request, h) => {
 };
 
 const editBookHandler = (request, h) => {
-    const { bookId } = request.params;
+    const { id } = request.params;
     const { name, year, author, summary, publisher, pageCount, readPage, reading } = request.payload;
-    const theBook = books.filter( (book) => book.id === bookId );
-    const { insertedAt } = theBook[0];
+    const theBook = books.filter( (book) => book.id === id );
     const isNotPresent = theBook.length < 1;
 
     if (isNotPresent) {
@@ -170,6 +169,7 @@ const editBookHandler = (request, h) => {
             response.code(400);
             return response;
         } else {
+            const { insertedAt } = theBook[0];
             const updatedAt = new Date().toISOString();
 
             if ( readPage === pageCount ) {
@@ -178,7 +178,7 @@ const editBookHandler = (request, h) => {
                 var finished = false;
             }
 
-            const editedBook = { bookId, name, year, author, summary, publisher, pageCount, readPage, finished, reading, insertedAt, updatedAt };
+            const editedBook = { id, name, year, author, summary, publisher, pageCount, readPage, finished, reading, insertedAt, updatedAt };
 
             const index = books.indexOf(theBook[0]);
             books.splice(index, 1, editedBook);
@@ -190,7 +190,7 @@ const editBookHandler = (request, h) => {
                     "status": "success",
                     "message": "Buku berhasil diperbarui",
                 });
-                response.code(201);
+                response.code(200);
                 return response;
             } else {
                 const response = h.response({
@@ -212,7 +212,7 @@ const deleteBookHandler = (request, h) => {
     if (isNotPresent) {
         const response = h.response({
             "status": "fail",
-            "message": "Gagal memperbarui buku. Id tidak ditemukan",
+            "message": "Buku gagal dihapus. Id tidak ditemukan",
         });
         response.code(404);
         return response;
@@ -237,5 +237,5 @@ const deleteBookHandler = (request, h) => {
             return response;
         }
     }
-}
+};
 export { addBookHandler, viewBookHandler, viewBookDetails, editBookHandler, deleteBookHandler };
