@@ -141,7 +141,7 @@ const viewBookDetails = (request, h) => {
 };
 
 const editBookHandler = (request, h) => {
-    const { id } = request.params;
+    const { bookId } = request.params;
     const { name, year, author, summary, publisher, pageCount, readPage, reading } = request.payload;
     const theBook = books.filter( (book) => book.id === id );
     const isNotPresent = theBook.length < 1;
@@ -177,7 +177,8 @@ const editBookHandler = (request, h) => {
             } else {
                 var finished = false;
             }
-
+            
+            const id = bookId;
             const editedBook = { id, name, year, author, summary, publisher, pageCount, readPage, finished, reading, insertedAt, updatedAt };
 
             const index = books.indexOf(theBook[0]);
