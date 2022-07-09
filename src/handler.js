@@ -143,7 +143,7 @@ const viewBookDetails = (request, h) => {
 const editBookHandler = (request, h) => {
     const { bookId } = request.params;
     const { name, year, author, summary, publisher, pageCount, readPage, reading } = request.payload;
-    const theBook = books.filter( (book) => book.id === id );
+    const theBook = books.filter( (book) => book.id === bookId );
     const isNotPresent = theBook.length < 1;
 
     if (isNotPresent) {
